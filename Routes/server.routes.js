@@ -18,7 +18,7 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-Router.get("/", auth, (req, res) => {
+Router.get("/", (req, res) => {
     res.status(200).send("Welcome to GlamGuru Backend");
 });
 
@@ -306,7 +306,7 @@ p {
                 </ul>
                 <p>We are looking forward to seeing you soon!</p>
                 <p>Please go to the website and in the appointment section. <strong>select the payment method</strong></p>
-                <a href="http://localhost:3000">GlamConnect</a>
+                <a href="https://glamconnect.vercel.app">GlamConnect</a>
             </div>
             <p>Best regards,</p>
             <p>Your Team at Glam Connect</p>
