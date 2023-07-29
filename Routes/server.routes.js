@@ -206,7 +206,7 @@ Router.post("/appointment", auth, async (req, res) => {
             <p>Best regards,</p>
             <p>Your Team at Glam Connect</p>
             <!-- You can also add a call-to-action button if needed -->
-            <a class="cta-button" href="http://localhost:3000/Appointment/${createdAppointment._id}">GO TO APPOINTMENT PAGE</a>
+            <a class="cta-button" href="https://glamconnect.vercel.app/Appointment/${createdAppointment._id}">GO TO APPOINTMENT PAGE</a>
         </body>
         </html>
         `;
