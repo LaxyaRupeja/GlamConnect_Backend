@@ -210,6 +210,72 @@ Router.post("/appointment", auth, async (req, res) => {
         </body>
         </html>
         `;
+        const emailHTML2 = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>New Appointment Booking</title>
+            <style>
+            body {
+                font-family: Arial, sans-serif;
+                line-height: 1.6;
+                max-width: 600px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+    
+            h1 {
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+    
+            p {
+                margin: 0;
+                margin-bottom: 10px;
+            }
+    
+            .appointment-details {
+                background-color: #6b46c1;
+                padding: 15px;
+                border-radius: 5px;
+                margin-bottom: 20px;
+                color:white;
+            }
+    
+            .appointment-details p {
+                margin: 0;
+            }
+    
+            .cta-button {
+                display: inline-block;
+                background-color: #007bff;
+                color: #fff;
+                padding: 10px 20px;
+                border-radius: 5px;
+                text-decoration: none;
+            }
+        </style>    
+        </head>
+        <body>
+            <h1>New Appointment Booking</h1>
+            <div class="appointment-details">
+                <p>Hello ${createdAppointment.professional.name},</p>
+                <p>You have a new appointment booking:</p>
+                <ul>
+                    <li><strong>Service:</strong> ${createdAppointment.service.name}</li>
+                    <li><strong>Duration:</strong> ${createdAppointment.service.duration}</li>
+                    <li><strong>Price:</strong> ${createdAppointment.service.amount}</li>
+                    <li><strong>Date:</strong> ${createdAppointment.date}</li>
+                    <li><strong>Time:</strong> ${createdAppointment.time}</li>
+                </ul>
+                <p>Please go on the website for more details and to accept/reject the appointment.</p>
+                <p>If you have any questions or concerns, please feel free to contact us.</p>
+            </div>
+            <p>Best regards,</p>
+            <p>Your Team at Glam Connect</p>
+        </body>
+        </html>
+        `;
         const mailOptions = {
             from: "glamconnect18@gmail.com",
             to: createdAppointment.professional.email,
@@ -224,10 +290,26 @@ Router.post("/appointment", auth, async (req, res) => {
                 return res.status(500).json({ message: "Error sending email." });
             }
             console.log("Email sent:", info.response);
+        });
+        const mailOptions2 = {
+            from: "glamconnect18@gmail.com",
+            to: email,
+            subject: "New Appointment Booking  <Read Required>",
+            html: emailHTML2,
+        };
+
+        // Send the email
+        transporter.sendMail(mailOptions2, (error, info) => {
+            if (error) {
+                console.error("Error sending email:", error);
+                return res.status(500).json({ message: "Error sending email." });
+            }
+            console.log("Email sent:", info.response);
             res.status(200).json({
                 message: "Appointment has been booked and Email sent successfully.",
             });
         });
+        
     } catch (error) {
         console.error("Error creating appointment:", error);
         res
